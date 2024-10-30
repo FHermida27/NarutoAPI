@@ -51,7 +51,7 @@ function CharacterCard({ character }) {
           onClick={handleFavoriteClick} 
           aria-label={`Agregar ${character.name} a favoritos`}
         >
-          <FavoriteIcon style={{ color: 'red' }} />
+          <FavoriteIcon style={{ color: 'red' }} /> 
         </IconButton>
       </CardContent>
       <Snackbar
