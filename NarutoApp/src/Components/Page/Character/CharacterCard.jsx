@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardMedia, Typography, IconButton, Snackbar } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  IconButton,
+  Snackbar,
+} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../FirebaseConfig";
@@ -13,17 +20,17 @@ function CharacterCard({ character }) {
     try {
       const favoriteData = {
         name: character.name,
-        birthdate: character.personal?.birthdate || '',
+        birthdate: character.personal?.birthdate || "",
         images: character.images || [],
       };
 
-      const uniqueId = `${character.id}-${Date.now()}`; 
-      
-      await setDoc(doc(db, 'favorites', uniqueId), favoriteData);
-      console.log('Favorito guardado correctamente');
+      const uniqueId = `${character.id}-${Date.now()}`;
+
+      await setDoc(doc(db, "favorites", uniqueId), favoriteData);
+      console.log("Favorito guardado correctamente");
       setSnackbarOpen(true);
     } catch (error) {
-      console.error('Error al guardar favorito: ', error);
+      console.error("Error al guardar favorito: ", error);
     }
   };
 
@@ -36,9 +43,14 @@ function CharacterCard({ character }) {
       <CardMedia
         component="img"
         height="250"
-        image={character.images[0]} 
+        image={
+          character.id === 515
+            ? "https://th.bing.com/th/id/OIP.GvlHgYtJSSG4OiUbSTKPTwHaEM?rs=1&pid=ImgDetMain"
+            : character.images[0]
+        }
         alt={character.name}
       />
+
       <CardContent>
         <Typography variant="h5">{character.name}</Typography>
         <Link to={`/character/${character.id}`}>
@@ -46,12 +58,12 @@ function CharacterCard({ character }) {
             Ver detalles
           </Typography>
         </Link>
-        <IconButton 
-          color="secondary" 
-          onClick={handleFavoriteClick} 
+        <IconButton
+          color="secondary"
+          onClick={handleFavoriteClick}
           aria-label={`Agregar ${character.name} a favoritos`}
         >
-          <FavoriteIcon style={{ color: 'red' }} /> 
+          <FavoriteIcon style={{ color: "red" }} />
         </IconButton>
       </CardContent>
       <Snackbar

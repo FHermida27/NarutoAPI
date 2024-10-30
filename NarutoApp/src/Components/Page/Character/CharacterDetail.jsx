@@ -5,7 +5,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Typography, Box, IconButton, Snackbar, Button } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; 
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { db } from "../../FirebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 import "./CharacterDetail.css";
@@ -19,7 +19,9 @@ function CharacterDetail() {
   useEffect(() => {
     const fetchCharacter = async () => {
       try {
-        const response = await axios.get(`https://dattebayo-api.onrender.com/characters/${id}`);
+        const response = await axios.get(
+          `https://dattebayo-api.onrender.com/characters/${id}`
+        );
         setCharacter(response.data);
       } catch (error) {
         console.error("Error fetching character:", error);
@@ -30,7 +32,11 @@ function CharacterDetail() {
 
   const handleFavoriteClick = async () => {
     try {
-      const favoriteDocRef = doc(db, 'favorites', `${character.id}-${new Date().getTime()}`);
+      const favoriteDocRef = doc(
+        db,
+        "favorites",
+        `${character.id}-${new Date().getTime()}`
+      );
       await setDoc(favoriteDocRef, {
         id: character.id,
         name: character.name,
@@ -48,7 +54,7 @@ function CharacterDetail() {
   };
 
   const toggleDetails = () => {
-    setShowDetails(prevState => !prevState);
+    setShowDetails((prevState) => !prevState);
   };
 
   if (!character) return <p>Loading...</p>;
@@ -62,7 +68,14 @@ function CharacterDetail() {
           <Carousel showThumbs={false} infiniteLoop autoPlay>
             {character.images.map((image, index) => (
               <div key={index}>
-                <img src={image} alt={`${character.name} ${index + 1}`} />
+                <img
+                  src={
+                    character.id === 515
+                      ? "https://th.bing.com/th/id/OIP.GvlHgYtJSSG4OiUbSTKPTwHaEM?rs=1&pid=ImgDetMain"
+                      : image
+                  }
+                  alt={`${character.name} ${index + 1}`}
+                />
               </div>
             ))}
           </Carousel>
@@ -70,56 +83,102 @@ function CharacterDetail() {
 
         <Box className="character-info">
           <header>
-            <Typography variant="h4" gutterBottom>{character.name}</Typography>
+            <Typography variant="h4" gutterBottom>
+              {character.name}
+            </Typography>
           </header>
-          <IconButton 
-            onClick={toggleDetails} 
-            className="expand-button">
-            <ExpandMoreIcon style={{ fontSize: '2rem', color: 'black' }} />
+          <IconButton onClick={toggleDetails} className="expand-button">
+            <ExpandMoreIcon style={{ fontSize: "2rem", color: "black" }} />
           </IconButton>
-          
+
           {showDetails && (
             <>
               {isRockLee ? (
                 <>
-                  <Typography variant="body1"><strong>Debut:</strong> {character.debut.manga} (Manga), {character.debut.anime} (Anime), {character.debut.novel} (Novel), {character.debut.movie} (Movie)</Typography>
+                  <Typography variant="body1">
+                    <strong>Debut:</strong> {character.debut.manga} (Manga),{" "}
+                    {character.debut.anime} (Anime), {character.debut.novel}{" "}
+                    (Novel), {character.debut.movie} (Movie)
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Familia:</strong> Hijo: {character.family.son}</Typography>
+                  <Typography variant="body1">
+                    <strong>Familia:</strong> Hijo: {character.family.son}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Jutsu:</strong> {character.jutsu.slice(0, 10).join(" - ")}...</Typography>
+                  <Typography variant="body1">
+                    <strong>Jutsu:</strong>{" "}
+                    {character.jutsu.slice(0, 10).join(" - ")}...
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Tipo de Naturaleza:</strong> {character.natureType ? character.natureType.join(" - ") : "No especificado"}</Typography>
+                  <Typography variant="body1">
+                    <strong>Tipo de Naturaleza:</strong>{" "}
+                    {character.natureType
+                      ? character.natureType.join(" - ")
+                      : "No especificado"}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Fecha de Nacimiento:</strong> {character.personal.birthdate}</Typography>
+                  <Typography variant="body1">
+                    <strong>Fecha de Nacimiento:</strong>{" "}
+                    {character.personal.birthdate}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Clan:</strong> {character.personal.clan}</Typography>
+                  <Typography variant="body1">
+                    <strong>Clan:</strong> {character.personal.clan}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Afiliación:</strong> {character.personal.affiliation.join(" - ")}</Typography>
+                  <Typography variant="body1">
+                    <strong>Afiliación:</strong>{" "}
+                    {character.personal.affiliation.join(" - ")}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Rango Ninja:</strong> {character.rank.ninjaRank.PartII}</Typography>
+                  <Typography variant="body1">
+                    <strong>Rango Ninja:</strong>{" "}
+                    {character.rank.ninjaRank.PartII}
+                  </Typography>
                 </>
               ) : (
                 <>
-                  <Typography variant="body1"><strong>Debut:</strong> {character.debut.manga} (Manga), {character.debut.anime} (Anime)</Typography>
+                  <Typography variant="body1">
+                    <strong>Debut:</strong> {character.debut.manga} (Manga),{" "}
+                    {character.debut.anime} (Anime)
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Familia:</strong> Padre: {character.family.father}, Madre: {character.family.mother}</Typography>
+                  <Typography variant="body1">
+                    <strong>Familia:</strong> Padre: {character.family.father},
+                    Madre: {character.family.mother}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Jutsu:</strong> {character.jutsu.slice(0, 10).join(" - ")}...</Typography>
+                  <Typography variant="body1">
+                    <strong>Jutsu:</strong>{" "}
+                    {character.jutsu.slice(0, 10).join(" - ")}...
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Tipo de Naturaleza:</strong> {character.natureType.join(" - ")}</Typography>
+                  <Typography variant="body1">
+                    <strong>Tipo de Naturaleza:</strong>{" "}
+                    {character.natureType.join(" - ")}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Fecha de Nacimiento:</strong> {character.personal.birthdate}</Typography>
+                  <Typography variant="body1">
+                    <strong>Fecha de Nacimiento:</strong>{" "}
+                    {character.personal.birthdate}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Clan:</strong> {character.personal.clan}</Typography>
+                  <Typography variant="body1">
+                    <strong>Clan:</strong> {character.personal.clan}
+                  </Typography>
                   <br />
-                  <Typography variant="body1"><strong>Afiliación:</strong> {character.personal.affiliation.join(" - ")}</Typography>
+                  <Typography variant="body1">
+                    <strong>Afiliación:</strong>{" "}
+                    {character.personal.affiliation.join(" - ")}
+                  </Typography>
                 </>
               )}
-              <IconButton 
-                color="secondary" 
-                onClick={handleFavoriteClick} 
-                className="favorite-button">
-                <FavoriteIcon style={{ color: 'red'}} /> Agregar Favorito
+              <IconButton
+                color="secondary"
+                onClick={handleFavoriteClick}
+                className="favorite-button"
+              >
+                <FavoriteIcon style={{ color: "red" }} /> Agregar Favorito
               </IconButton>
             </>
           )}

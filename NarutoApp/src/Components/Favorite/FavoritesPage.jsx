@@ -11,7 +11,10 @@ function FavoritesPage() {
   useEffect(() => {
     const fetchFavorites = async () => {
       const querySnapshot = await getDocs(collection(db, "favorites"));
-      const favoritesData = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+      const favoritesData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
       setFavorites(favoritesData);
     };
     fetchFavorites();
@@ -25,7 +28,9 @@ function FavoritesPage() {
           alt="Imagen izquierda"
           className="header-image"
         />
-        <h2><font color="white">Favoritos</font></h2>
+        <h2>
+          <font color="white">Favoritos</font>
+        </h2>
         <img
           src="https://th.bing.com/th/id/OIP.TjGS1ZvlykQxmt2a45-8AQHaEK?w=327&h=187&c=7&r=0&o=5&pid=1.7"
           alt="Imagen derecha"
@@ -35,16 +40,21 @@ function FavoritesPage() {
       <div className="favorites-grid">
         {favorites.map((favorite) => (
           <Card key={favorite.id} className="favorite-card">
-            <CardMedia
+              <CardMedia
               component="img"
               height="250"
-              image={favorite.images[0]}
+              image={ favorite.id === "515"? "https://kahramanbaykus.com/wp-content/uploads/2018/02/jiraya_sage_mode_by_vergildvs-d3jxmyv.png"
+                  : favorite.images[0]
+              }
               alt={favorite.name}
             />
+
             <CardContent>
               <Typography variant="h5">{favorite.name}</Typography>
-              <Typography variant="body1">Cumpleaños: {favorite.birthdate}</Typography>
-              <FavoriteIcon style={{ color: 'red'}} />
+              <Typography variant="body1">
+                Cumpleaños: {favorite.birthdate}
+              </Typography>
+              <FavoriteIcon style={{ color: "red" }} />
             </CardContent>
           </Card>
         ))}
@@ -54,4 +64,3 @@ function FavoritesPage() {
 }
 
 export default FavoritesPage;
-
