@@ -1,17 +1,45 @@
+/* Estilo base para la barra de navegación */
 .navbar {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
     background-color: #333;
-  }
-  
-  .navbar a {
+}
+
+/* Espaciado entre los enlaces */
+.navbar a {
     margin: 0 10px;
     color: white;
-  }
-  
-  .navbar a:hover {
+    text-decoration: none;
+}
+
+/* Estilo para el efecto hover */
+.navbar a:hover {
     color: lightgray;
-  }
-  
+}
+
+/* Ajustes para tablets y dispositivos de escritorio pequeños */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px 0;
+    }
+
+    .navbar a {
+        margin: 5px 0;
+    }
+}
+
+/* Ajustes para dispositivos móviles (teléfonos) */
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+
+    .navbar a {
+        margin: 8px 0;
+        font-size: 14px;
+    }
+}
